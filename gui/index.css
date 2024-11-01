@@ -55,6 +55,49 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/*Table stuff*/
+table {
+  margin: 0;
+  padding: 0;
+
+  border-spacing: 0 16px;
+  vertical-align: middle;
+}
+
+th {
+  text-align: center;
+  font-weight: bold;
+}
+
+td {
+  padding: 8px;
+
+  border-top: 1px solid #a77c5c;
+  border-bottom: 1px solid #a77c5c;
+  border-right: 1px dotted #a77c5c;
+}
+
+td:nth-child(2) {
+  border-left: 1px dotted #a77c5c;
+}
+
+table.innerTable {
+  width: 100%;
+  border-spacing: 0;
+}
+
+table.innerTable td:nth-child(2) {
+  border-left: 0;
+}
+
+table.innerTable td:nth-child(1) {
+  border-left: 1px dotted #a77c5c;
+}
+
+tr.highlighted {
+  background: rgba(255, 255, 72, 0.1);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

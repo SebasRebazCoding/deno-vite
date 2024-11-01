@@ -1,9 +1,3 @@
-//There's four types of stat in the game.
-type statCategory = "Damage" | "Resistance" | "Primary" | "Secondary";
-
-//IDs are either numeric or strings... for some reason.
-type statID = number | string;
-
 class Stat {
     name: string;
     description: string;
@@ -417,12 +411,6 @@ const statistics: { [type: string]: object } = {
 };
 
 //This should return associated arrays for data manipulation.
-export function RenderStats() {
+export function AllStats() {
     return statistics;
-}
-
-export function StatsByID(_id: statID) {
-}
-
-export function StatsByCategory(_type: statCategory) {
 }

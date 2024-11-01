@@ -1,12 +1,15 @@
 import { Application, Router } from "@oak/oak";
 import { oakCors } from "@tajpouria/cors";
 import routeStaticFilesFrom from "./util/routeStaticFilesFrom.ts";
+import LoadDredmor from "./models/commons.ts";
 
 const port = 8000;
 const router = new Router();
 
 //No data -- for now.
-router.get("/api/dredmor", () => {});
+router.get("/api/dredmor", (ctx) => {
+  ctx.response.body = LoadDredmor();
+});
 
 const app = new Application();
 app.use(oakCors());
@@ -19,5 +22,3 @@ app.use(routeStaticFilesFrom([
 
 console.log(`starting Backend Server running on http://localhost:${port}`);
 await app.listen({ port: port });
-
-//This is a comment

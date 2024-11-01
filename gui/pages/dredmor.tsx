@@ -1,17 +1,65 @@
 import { Link as _link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
+import { Category, Stat, StatGroup } from "../types.ts";
+
+function RenderCategoryTabs(data: Record<string, object>) {
+    const tabs = [];
+    for (const cat in data["stats"]) {
+        tabs.push(<Tab>{cat}</Tab>);
+    }
+    return <TabList>{tabs}</TabList>;
+}
+
+function RenderStats(data: Record<string, object>) {
+    const tabpanels = [];
+    const category = data["stats"] as Category;
+    for (const cat in category) {
+        const statGr: StatGroup = category[cat];
+        const rows = [];
+        for (const stat in statGr) {
+            const info: Stat = statGr[stat];
+            rows.push(
+                <tr>
+                    <td>
+                        Icon: {info["icon"]}
+                        <br />
+                        {stat}
+                    </td>
+                    <td align="left">
+                        {info["name"]}
+                        <br />
+                        {info["description"]}
+                    </td>
+                </tr>,
+            );
+        }
+        tabpanels.push(
+            <TabPanel>
+                <table>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+            </TabPanel>,
+        );
+    }
+    return tabpanels;
+}
 
 export function Dredmor() {
-    const [tabIndex, setTabIndex] = useState(0);
+    const [content, setContent] = useState<Record<string, object>>({});
+
+    useEffect(() => {
+        (async () => {
+            const response = await fetch(`/api/dredmor/`);
+            const siteContent = await response.json();
+            setContent(siteContent);
+        })();
+    }, []);
+
     return (
-        <Tabs
-            classID="tabContent"
-            selectedIndex={tabIndex}
-            onSelect={(index: number) => setTabIndex(index)}
-            disableLeftRightKeys={true}
-            disableUpDownKeys={true}
-        >
+        <Tabs classID="tabContent">
             <TabList>
                 <Tab>Items</Tab>
                 <Tab>Crafts</Tab>
@@ -34,16 +82,8 @@ export function Dredmor() {
             <TabPanel>Their only crime is being ugly...</TabPanel>
             <TabPanel>
                 <Tabs>
-                    <TabList>
-                        <Tab>Damage</Tab>
-                        <Tab>Resistance</Tab>
-                        <Tab>Primary</Tab>
-                        <Tab>Secondary</Tab>
-                    </TabList>
-                    <TabPanel>these hurt you</TabPanel>
-                    <TabPanel>these make it hurt less</TabPanel>
-                    <TabPanel>these affect sec. stats</TabPanel>
-                    <TabPanel>these more specific</TabPanel>
+                    {RenderCategoryTabs(content)}
+                    {RenderStats(content)}
                 </Tabs>
             </TabPanel>
             <TabPanel>
