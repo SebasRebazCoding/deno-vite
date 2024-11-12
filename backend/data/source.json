@@ -1,0 +1,26 @@
+[
+    {
+        "dir": "data",
+        "title": "Base Game",
+        "active": true,
+        "required": true
+    },
+    {
+        "dir": "expansion",
+        "title": "Realm of the Diggle Gods",
+        "tag": "RotDG",
+        "active": false
+    },
+    {
+        "dir": "expansion2",
+        "title": "You Have To Name The Expansion Pack",
+        "tag": "YHTNTEP",
+        "active": false
+    },
+    {
+        "dir": "expansion3",
+        "title": "Conquest of the Wizardlands",
+        "tag": "CotW",
+        "active": false
+    }
+]

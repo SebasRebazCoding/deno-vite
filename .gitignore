@@ -13,9 +13,9 @@ dist-ssr
 *.local
 
 # Editor directories and files
+backend/sources/*
 .idea
 .DS_Store
-backend/source_files/*
 *.suo
 *.ntvs*
 *.njsproj

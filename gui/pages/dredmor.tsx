@@ -1,4 +1,3 @@
-import { Link as _link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { Category, Stat, StatGroup } from "../types.ts";
@@ -86,17 +85,42 @@ export function Dredmor() {
                     {RenderStats(content)}
                 </Tabs>
             </TabPanel>
-            <TabPanel>
-                These are where the magic happens, literally
-            </TabPanel>
+            <TabPanel>These are where the magic happens, literally</TabPanel>
             <TabPanel>Some people call this "Miscellanea"</TabPanel>
+            <TabPanel>Ask and you shall receive. Unless it's pewter.</TabPanel>
             <TabPanel>
-                Ask and you shall receive. Unless it's pewter.
+                This looks like a great place to place my own info...
             </TabPanel>
             <TabPanel>
-                This looks like a great place to place my own info
+                <Tabs>
+                    WARNING: NOT IMPLEMENTED YET
+                    <TabList>
+                        <Tab>Enable/Disable Mods</Tab>
+                        <Tab>Manage Loaded Mods</Tab>
+                    </TabList>
+                    <TabPanel>
+                        Enable and disable mods to your liking.
+                        <ul>None</ul>
+                    </TabPanel>
+                    <TabPanel>
+                        Manage folders here!
+                        <br />
+                        Make the changes you need and press the button at the
+                        end.
+                        <br />
+                        <form action="">
+                            <label htmlFor="upload">
+                                Upload Mods (ZIP, 7ZIP or RAR)
+                            </label>
+                            <input
+                                type="file"
+                                id="upload"
+                                accept=".zip, .rar, .7zip"
+                            />
+                        </form>
+                    </TabPanel>
+                </Tabs>
             </TabPanel>
-            <TabPanel>Enable, disable and add mods you'd like.</TabPanel>
         </Tabs>
     );
 }

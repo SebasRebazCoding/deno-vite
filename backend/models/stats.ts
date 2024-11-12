@@ -1,3 +1,12 @@
+/**
+ * A Statistic (Stat for short) is a numeric value used to manage interactions between the player, monsters and many of the dungeon's elements.
+ * It is composed of:
+ * 1. name: The Stat's proper name, as a string.
+ * 2. description: The Stat's in-game description.
+ * 3. icon: The filename of this Stat's icon. It will be parsed and converted into a blob, then sent to the frontend.
+ * 4. statValue: A nullable function that uses Warrior, Rogue and Wizard levels to calculate this specific Stat. Used to parse Monster Stats.
+ */
+
 class Stat {
     name: string;
     description: string;
@@ -16,6 +25,12 @@ class Stat {
         this.statValue = stat;
     }
 }
+
+/**
+ * The following are four hardcoded maps of Stats for use with other structures in the backend.
+ * Each map represents one of the four Stat types within Dredmor: Damage, Resistance, Primary and Secondary.
+ * Each Stat is paired to an ID string, used in the XML files to represent the stat itself.
+ */
 
 const damage: { [id: string]: Stat } = {
     "acidic": new Stat(
@@ -403,6 +418,10 @@ const secondary: { [id: number]: Stat } = {
     ),
 };
 
+/**
+ * To ship these Stat Categories to the frontend and to other models that need them (like Monsters), they're packed onto another map.
+ * This just contains the aforementioned stats.
+ */
 const statistics: { [type: string]: object } = {
     "Damage": damage,
     "Resistance": resist,

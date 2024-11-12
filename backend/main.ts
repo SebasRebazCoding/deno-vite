@@ -2,14 +2,16 @@ import { Application, Router } from "@oak/oak";
 import { oakCors } from "@tajpouria/cors";
 import routeStaticFilesFrom from "./util/routeStaticFilesFrom.ts";
 import LoadDredmor from "./models/commons.ts";
+import { CheckBaseFiles } from "./models/source.ts";
 
 const port = 8000;
 const router = new Router();
 
 //No data -- for now.
 router.get("/api/dredmor", (ctx) => {
-  ctx.response.body = LoadDredmor();
-});
+  if (CheckBaseFiles()) ctx.response.body = LoadDredmor();
+  else ctx.response.redirect("/api/dredmor/404");
+}).get("/api/dredmor/404", () => {});
 
 const app = new Application();
 app.use(oakCors());

@@ -2,6 +2,7 @@
 import _React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Dredmor } from "./pages/dredmor.tsx";
+import { NoFiles } from "./pages/no_files.tsx";
 import "./App.css";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dredmor />} />
+        <Route path="/404" element={<NoFiles />} />
       </Routes>
     </BrowserRouter>
   );
