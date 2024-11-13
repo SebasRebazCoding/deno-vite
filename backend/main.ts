@@ -9,8 +9,7 @@ const router = new Router();
 
 //No data -- for now.
 router.get("/api/dredmor", (ctx) => {
-  if (CheckBaseFiles()) ctx.response.body = LoadDredmor();
-  else ctx.response.redirect("/api/dredmor/404");
+  ctx.response.body = CheckBaseFiles() ? LoadDredmor() : "";
 }).get("/api/dredmor/404", () => {});
 
 const app = new Application();

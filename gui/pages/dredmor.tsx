@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { Category, Stat, StatGroup } from "../types.ts";
+import { Navigate } from "react-router-dom";
 
 function RenderCategoryTabs(data: Record<string, object>) {
     const tabs = [];
@@ -47,80 +48,94 @@ function RenderStats(data: Record<string, object>) {
 }
 
 export function Dredmor() {
+    const [filesPresent, setFilesPresent] = useState(true);
     const [content, setContent] = useState<Record<string, object>>({});
 
     useEffect(() => {
         (async () => {
             const response = await fetch(`/api/dredmor/`);
-            const siteContent = await response.json();
-            setContent(siteContent);
+            const actualResponse = await response.text();
+            if (actualResponse) {
+                const siteContent = await response.json();
+                setContent(siteContent);
+            } else {
+                setFilesPresent(false);
+            }
         })();
     }, []);
 
-    return (
-        <Tabs classID="tabContent">
-            <TabList>
-                <Tab>Items</Tab>
-                <Tab>Crafts</Tab>
-                <Tab>Encrusts</Tab>
-                <Tab>Skills</Tab>
-                <Tab>Spells</Tab>
-                <Tab>Monsters</Tab>
-                <Tab>Stats</Tab>
-                <Tab>Templates</Tab>
-                <Tab>Meta</Tab>
-                <Tab>Search</Tab>
-                <Tab>About</Tab>
-                <Tab>Mods</Tab>
-            </TabList>
-            <TabPanel>The Items'd be here, but INVENTORY FULL</TabPanel>
-            <TabPanel>Craftily Crafted Craftings</TabPanel>
-            <TabPanel>I said ENCRUSTS, not UNCRUSTABLES</TabPanel>
-            <TabPanel>Please place skillpoints here</TabPanel>
-            <TabPanel>Magic Schmagic, just use fireball</TabPanel>
-            <TabPanel>Their only crime is being ugly...</TabPanel>
-            <TabPanel>
-                <Tabs>
-                    {RenderCategoryTabs(content)}
-                    {RenderStats(content)}
-                </Tabs>
-            </TabPanel>
-            <TabPanel>These are where the magic happens, literally</TabPanel>
-            <TabPanel>Some people call this "Miscellanea"</TabPanel>
-            <TabPanel>Ask and you shall receive. Unless it's pewter.</TabPanel>
-            <TabPanel>
-                This looks like a great place to place my own info...
-            </TabPanel>
-            <TabPanel>
-                <Tabs>
-                    WARNING: NOT IMPLEMENTED YET
-                    <TabList>
-                        <Tab>Enable/Disable Mods</Tab>
-                        <Tab>Manage Loaded Mods</Tab>
-                    </TabList>
-                    <TabPanel>
-                        Enable and disable mods to your liking.
-                        <ul>None</ul>
-                    </TabPanel>
-                    <TabPanel>
-                        Manage folders here!
-                        <br />
-                        Make the changes you need and press the button at the
-                        end.
-                        <br />
-                        <form action="">
-                            <label htmlFor="upload">
-                                Upload Mods (ZIP, 7ZIP or RAR)
-                            </label>
-                            <input
-                                type="file"
-                                id="upload"
-                                accept=".zip, .rar, .7zip"
-                            />
-                        </form>
-                    </TabPanel>
-                </Tabs>
-            </TabPanel>
-        </Tabs>
-    );
+    if (filesPresent) {
+        return (
+            <Tabs classID="tabContent">
+                <TabList>
+                    <Tab>Items</Tab>
+                    <Tab>Crafts</Tab>
+                    <Tab>Encrusts</Tab>
+                    <Tab>Skills</Tab>
+                    <Tab>Spells</Tab>
+                    <Tab>Monsters</Tab>
+                    <Tab>Stats</Tab>
+                    <Tab>Templates</Tab>
+                    <Tab>Meta</Tab>
+                    <Tab>Search</Tab>
+                    <Tab>About</Tab>
+                    <Tab>Mods</Tab>
+                </TabList>
+                <TabPanel>The Items'd be here, but INVENTORY FULL</TabPanel>
+                <TabPanel>Craftily Crafted Craftings</TabPanel>
+                <TabPanel>I said ENCRUSTS, not UNCRUSTABLES</TabPanel>
+                <TabPanel>Please place skillpoints here</TabPanel>
+                <TabPanel>Magic Schmagic, just use fireball</TabPanel>
+                <TabPanel>Their only crime is being ugly...</TabPanel>
+                <TabPanel>
+                    <Tabs>
+                        {RenderCategoryTabs(content)}
+                        {RenderStats(content)}
+                    </Tabs>
+                </TabPanel>
+                <TabPanel>
+                    These are where the magic happens, literally
+                </TabPanel>
+                <TabPanel>Some people call this "Miscellanea"</TabPanel>
+                <TabPanel>
+                    Ask and you shall receive. Unless it's pewter.
+                </TabPanel>
+                <TabPanel>
+                    This looks like a great place to place my own info...
+                </TabPanel>
+                <TabPanel>
+                    <Tabs>
+                        WARNING: NOT IMPLEMENTED YET
+                        <TabList>
+                            <Tab>Enable/Disable Mods</Tab>
+                            <Tab>Manage Loaded Mods</Tab>
+                        </TabList>
+                        <TabPanel>
+                            Enable and disable mods to your liking.
+                            <ul>None</ul>
+                        </TabPanel>
+                        <TabPanel>
+                            Manage folders here!
+                            <br />
+                            Make the changes you need and press the button at
+                            the end.
+                            <br />
+                            <form action="">
+                                <label htmlFor="upload">
+                                    Upload Mods (ZIP, 7ZIP or RAR)
+                                </label>
+                                <input
+                                    type="file"
+                                    id="upload"
+                                    accept=".zip, .rar, .7zip"
+                                />
+                            </form>
+                        </TabPanel>
+                    </Tabs>
+                </TabPanel>
+            </Tabs>
+        );
+    } else {
+        return <Navigate to={"/404"} />;
+    }
 }
